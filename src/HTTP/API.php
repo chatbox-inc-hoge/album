@@ -8,48 +8,55 @@
 
 namespace Chatbox\Album\HTTP;
 
-use Silex\Application;
+use Chatbox\Album\Album;
+use Chatbox\Silane;
+use Chatbox\Config\Config;
 
-class API {
+use Chatbox\Silane\Providers\RestErrorHandlerProvider;
 
-    static public function boot($param){
-        $obj = new static($param);
-        return $obj;
+class API extends Silane{
+
+
+    static public function config(){
+        $config = Album::config();
+        $config->load(__DIR__."/../../config/silane.php");
+        return $config;
+    }
+
+    public function __construct(array $values = array())
+    {
+        parent::__construct($values);
+
+        $this->register(new RestErrorHandlerProvider());
+        $this->mount("/upload", new Controllers\Upload());
+        $this->mount("/photo", new Controllers\Photo());
+        $this->mount("/image", new Controllers\Image());
+        $this->mount("/i", new Controllers\Redirect());
+    }
+
+
+    public function setConfig(Config $config){
+        $this["config"] = $config;
+        $this["album"] = new Album($config);
+        foreach($config->get("silane.silex") as $key=>$value){
+            $this[$key] = $value;
+        }
+        return $this;
     }
 
     /**
-     * 色々アクセサ伸ばすのめんどいしpublicでOK
-     * @var Application
+     * @return Config
      */
-    public $app;
-
-    function __construct($param)
-    {
-        $this->app = new Application($param);
+    public function getConfig(){
+        return $this["config"];
     }
 
-    protected function configure(){
-	    $this->app->register(new \Silex\Provider\ServiceControllerServiceProvider());
-
-        $this->app["photo.controller"] = $this->app->share(function(){
-            return new \Chatbox\Album\HTTP\Route\Photo();
-        });
-	    $this->app["upload.controller"] = $this->app->share(function(){
-		    return new \Chatbox\Album\HTTP\Route\Upload();
-	    });
-
-        $this->app->get("/photo/list/{category}/","photo.controller:actionList");
-        $this->app->get("/photo/show/{category}/{originName}","photo.controller:actionShow");
-        $this->app->post("/upload/post","upload.controller:actionPost");
-        $this->app->post("/upload/file","upload.controller:actionFile");
-    }
-
-    public function run(){
-        $this->configure();
-        $this->app->run();
+    /**
+     * @return Album
+     */
+    public function getAlbum(){
+        return $this["album"];
     }
 
 
-
-
-} 
+}

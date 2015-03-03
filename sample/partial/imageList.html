@@ -1,13 +1,33 @@
 
-<div class="row">
-    <div class="col-sm-3" data-ng-repeat="list in lists">
+<div class="row" data-ng-controller="imageListController">
+    <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+    <div class="col-sm-4" data-ng-repeat="list in lists" data-ng-click="openModal()">
         <div class="thumbnail">
             <img data-ng-src="{{list.url}}">
-            <div class="caption">
-                <h4>{{list.origin_name}}</h4>
-                <p>{{list.comment}}</p>
-                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-            </div>
+            <img data-ng-src="api.php{{list.apiUrl}}">
+            <!--<div class="caption">-->
+                <!--<h4>{{list.origin_name}}</h4>-->
+                <!--<p>{{list.comment}}</p>-->
+                <!--<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>-->
+            <!--</div>-->
         </div>
     </div>
+
+    <script type="text/ng-template" id="imageModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Image Data</h3>
+        </div>
+        <div class="modal-body">
+            Selected: <b>{{image}}</b>
+            <div>
+                <img style="height: 200px" data-ng-src="{{image.url}}" alt=""/>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">Ok</button>
+            <button class="btn btn-danger" ng-click="delete()">delete</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
 </div>

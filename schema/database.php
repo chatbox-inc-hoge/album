@@ -16,6 +16,11 @@ return [
                 $table->dateTime("created_at");
                 $table->dateTime("updated_at");
             },
+        "album_data" => function(Blueprint $table){
+                $table->unsignedInteger("id",true);
+                $table->binary("data");
+                $table->dateTime("created_at");
+            },
     ],
     "seeds" => [
         ["sample_table",function(Builder $builder){

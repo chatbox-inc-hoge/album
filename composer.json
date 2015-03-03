@@ -13,7 +13,8 @@
         "chatbox/migrate": "dev-master",
         "symfony/finder": "@stable",
         "symfony/filesystem": "@stable",
-        "silex/silex": "@stable"
+        "chatbox/silane": "dev-master",
+        "chatbox/box": "dev-master"
     },
     "autoload":{
         "psr-4":{

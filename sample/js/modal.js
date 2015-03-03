@@ -49,17 +49,17 @@
 
 	var itemNode, modalNode;
 	
-	modalNode = __webpack_require__(/*! ./modal.html */ 1);
+	modalNode = __webpack_require__(/*! ./modal.html */ 3);
 	
-	itemNode = __webpack_require__(/*! ./item.html */ 2);
+	itemNode = __webpack_require__(/*! ./item.html */ 4);
 	
 	(function($) {
 	  var $modalNode, album;
 	  $modalNode = function(imageLists) {
-	    var $elem, image, listNode, _i, _len;
+	    var $elem, i, image, len, listNode;
 	    $elem = $(modalNode);
-	    for (_i = 0, _len = imageLists.length; _i < _len; _i++) {
-	      image = imageLists[_i];
+	    for (i = 0, len = imageLists.length; i < len; i++) {
+	      image = imageLists[i];
 	      listNode = "<li>" + image + "</li>";
 	      $(".modal-body ul", $elem).append(listNode);
 	    }
@@ -82,7 +82,9 @@
 
 
 /***/ },
-/* 1 */
+/* 1 */,
+/* 2 */,
+/* 3 */
 /*!**********************************!*\
   !*** ./sample/coffee/modal.html ***!
   \**********************************/
@@ -91,13 +93,13 @@
 	module.exports = "<div class=\"modal fade\">\n    <div class=\"modal-dialog\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n                <h4 class=\"modal-title\">Modal title</h4>\n            </div>\n            <div class=\"modal-body\">\n                <ul>\n                    <li>hogehoge</li>\n                </ul>\n            </div>\n            <div class=\"modal-footer\">\n                <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\n                <button type=\"button\" class=\"btn btn-primary\">Save changes</button>\n            </div>\n        </div><!-- /.modal-content -->\n    </div><!-- /.modal-dialog -->\n</div><!-- /.modal -->";
 
 /***/ },
-/* 2 */
+/* 4 */
 /*!*********************************!*\
   !*** ./sample/coffee/item.html ***!
   \*********************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<div class=\"col-xs-3\">\n    <div class=\"thumbnail\">\n        <img src=\"" + __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./...\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())) + "\" alt=\"...\">\n        <div class=\"caption\">\n            <h4>Thumbnail label</h4>\n            <p></p>\n            <p><a href=\"#\" class=\"btn btn-primary\" role=\"button\">Button</a> <a href=\"#\" class=\"btn btn-default\" role=\"button\">Button</a></p>\n        </div>\n    </div>\n</div>";
+	module.exports = "<div class=\"col-xs-3\">\n    <div class=\"thumbnail\">\n        <img src=\"xxxHTMLLINKxxx0.94092000136151910.6712250174023211xxx\" alt=\"...\">\n        <div class=\"caption\">\n            <h4>Thumbnail label</h4>\n            <p></p>\n            <p><a href=\"#\" class=\"btn btn-primary\" role=\"button\">Button</a> <a href=\"#\" class=\"btn btn-default\" role=\"button\">Button</a></p>\n        </div>\n    </div>\n</div>";
 
 /***/ }
 /******/ ])
