@@ -7,9 +7,14 @@ if(!class_exists("\\Chatbox\\Album\\Album")){
     exit(1);
 }
 
+ini_set("memory_limit",-1);
+
 $console = new Application();
 $console->add(new Chatbox\Album\Command\Sync());
+$console->add(new Chatbox\Album\Command\Export());
+$console->add(new Chatbox\Album\Command\ImportDB());
 $console->add(new Chatbox\Album\Command\Test());
+$console->add(new Chatbox\Album\Command\Test2());
 
 $console->run();
 

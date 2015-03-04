@@ -51,7 +51,7 @@
 	
 	app = angular.module('albumSample', ["ui.bootstrap"]);
 	
-	app.controller("imageListController", __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./ctrl/imageListController\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())));
+	app.controller("imageListController", __webpack_require__(/*! ./ctrl/imageListController */ 5));
 	
 	app.controller("imageModalController", __webpack_require__(/*! ./ctrl/imageModalController */ 6));
 	
@@ -139,7 +139,94 @@
 /***/ },
 /* 3 */,
 /* 4 */,
-/* 5 */,
+/* 5 */
+/*!*******************************************************!*\
+  !*** ./sample/coffee/ctrl/imageListController.coffee ***!
+  \*******************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	var loadList;
+	
+	loadList = function($scope) {
+	  console.log('データを送信します', $scope);
+	  return $.get('/api.php/photo/list/' + $scope.category + '/', {}, function(data) {
+	    return $scope.$apply(function() {
+	      if (data.list) {
+	        $scope.lists.length = 0;
+	        $scope.lists.push.apply($scope.lists, data.list);
+	        return console.log(data);
+	      } else {
+	        return console.error('データの受信形式が異常です。');
+	      }
+	    });
+	  });
+	};
+	
+	module.exports = [
+	  '$scope', '$modal', function($scope, $modal) {
+	    console.log('hogehoge controller');
+	    $scope.lists = [];
+	    $scope.alerts = [];
+	    $scope.category = 'common';
+	    $scope.srcMode = "hashed";
+	    $scope.reload = function() {
+	      return loadList($scope);
+	    };
+	    loadList($scope);
+	    $scope.getSrc = function(apiEntry, index) {
+	      var image;
+	      if (image = $scope.lists[index]) {
+	        if ($scope.srcMode === "hashed") {
+	          return image.hashedUrl;
+	        } else if ($scope.srcMode === "redirect") {
+	          return apiEntry + image.redirectUrl;
+	        } else if ($scope.srcMode === "origin") {
+	          return apiEntry + image.originUrl;
+	        } else {
+	          return console.error("invalid srcMode", $scope.srcMode);
+	        }
+	      } else {
+	        return console.error("image index " + index + " is out of range");
+	      }
+	    };
+	    $scope.openModal = function() {
+	      var image, modalInstance;
+	      image = $scope.lists[this.$index];
+	      console.log("open modal for", image);
+	      if (image) {
+	        modalInstance = $modal.open({
+	          templateUrl: "imageModal.html",
+	          controller: "imageModalController",
+	          resolve: {
+	            image: function() {
+	              return image;
+	            }
+	          }
+	        });
+	        return modalInstance.result.then(function(status) {
+	          if (status === "deleted") {
+	            $scope.reload();
+	            return $scope.alerts.push({
+	              type: "success",
+	              msg: "delete image completed"
+	            });
+	          } else if (status === "failToDelete") {
+	            return $scope.alerts.push({
+	              type: "danger",
+	              msg: "fail to delete image"
+	            });
+	          }
+	        });
+	      }
+	    };
+	    return $scope.closeAlert = function(index) {
+	      return $scope.alerts.splice(index, 1);
+	    };
+	  }
+	];
+
+
+/***/ },
 /* 6 */
 /*!********************************************************!*\
   !*** ./sample/coffee/ctrl/imageModalController.coffee ***!

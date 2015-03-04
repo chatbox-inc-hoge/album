@@ -13,8 +13,9 @@ use Chatbox\Silane\Response\JsonStatusResponse;
 use Chatbox\PHPUtil;
 
 use Chatbox\Input;
+use Silex\ControllerProviderInterface;
 
-class Upload implements \Silex\Api\ControllerProviderInterface{
+class Upload implements ControllerProviderInterface{
 
     /**
      * @var Input

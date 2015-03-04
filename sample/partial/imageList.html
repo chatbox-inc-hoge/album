@@ -1,9 +1,25 @@
 
 <div class="row" data-ng-controller="imageListController">
     <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+
+    <div>
+        <label class="radio-inline">
+            <input type="radio" data-ng-model="srcMode" value="origin"/>
+            origin
+        </label>
+        <label class="radio-inline">
+            <input type="radio" data-ng-model="srcMode" value="hashed"/>
+            hashed
+        </label>
+        <label class="radio-inline">
+            <input type="radio" data-ng-model="srcMode" value="redirect"/>
+            redirect
+        </label>
+    </div>
+    <p>{{srcMode}}</p>
     <div class="col-sm-4" data-ng-repeat="list in lists" data-ng-click="openModal()">
         <div class="thumbnail">
-            <img data-ng-src="{{list.url}}">
+            <img data-ng-src="{{getSrc('/api.php',$index)}}">
             <img data-ng-src="api.php{{list.apiUrl}}">
             <!--<div class="caption">-->
                 <!--<h4>{{list.origin_name}}</h4>-->

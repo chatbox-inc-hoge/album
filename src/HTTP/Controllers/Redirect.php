@@ -13,7 +13,9 @@ use Chatbox\Input;
 use Chatbox\Silane\Response\JsonStatusResponse;
 use Chatbox\HTTP;
 
-class Redirect implements \Silex\Api\ControllerProviderInterface{
+use Silex\ControllerProviderInterface;
+
+class Redirect implements ControllerProviderInterface{
 
     protected $input;
     /**

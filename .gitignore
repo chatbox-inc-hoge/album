@@ -2,5 +2,10 @@
 /vendor
 /sample/bower_components
 /sample/images
+/sample/image
+/image
+/images
 
 /node_modules
+
+/*.csv

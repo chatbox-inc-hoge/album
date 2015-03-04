@@ -187,18 +187,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/chatbox-inc/silane.git",
-                "reference": "cadc6be5fbc98061acd3cb021f737c6419d25af3"
+                "reference": "98b2c27e6e33a6f1059d9c262a36f177b2a16656"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chatbox-inc/silane/zipball/cadc6be5fbc98061acd3cb021f737c6419d25af3",
-                "reference": "cadc6be5fbc98061acd3cb021f737c6419d25af3",
+                "url": "https://api.github.com/repos/chatbox-inc/silane/zipball/98b2c27e6e33a6f1059d9c262a36f177b2a16656",
+                "reference": "98b2c27e6e33a6f1059d9c262a36f177b2a16656",
                 "shasum": ""
             },
             "require": {
                 "chatbox/phputil": "dev-master",
                 "php": ">=5.4",
-                "silex/silex": "@stable"
+                "silex/silex": "1.2.3"
             },
             "type": "project",
             "autoload": {
@@ -211,7 +211,7 @@
                 "MIT"
             ],
             "description": "silane - silex based framework component",
-            "time": "2015-02-17 13:01:25"
+            "time": "2015-03-03 08:54:04"
         },
         {
             "name": "chatbox/tmp-data",
@@ -481,16 +481,16 @@
         },
         {
             "name": "pimple/pimple",
-            "version": "dev-master",
+            "version": "1.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/silexphp/Pimple.git",
-                "reference": "2bcd90124a31bcf61804b9eb5badb85679469921"
+                "reference": "bc2fc12cdf1f29bcad9e650d493a54a8fd1f3d85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silexphp/Pimple/zipball/2bcd90124a31bcf61804b9eb5badb85679469921",
-                "reference": "2bcd90124a31bcf61804b9eb5badb85679469921",
+                "url": "https://api.github.com/repos/silexphp/Pimple/zipball/bc2fc12cdf1f29bcad9e650d493a54a8fd1f3d85",
+                "reference": "bc2fc12cdf1f29bcad9e650d493a54a8fd1f3d85",
                 "shasum": ""
             },
             "require": {
@@ -499,12 +499,12 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0.x-dev"
+                    "dev-master": "1.1.x-dev"
                 }
             },
             "autoload": {
                 "psr-0": {
-                    "Pimple": "src/"
+                    "Pimple": "lib/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -523,7 +523,7 @@
                 "container",
                 "dependency injection"
             ],
-            "time": "2015-01-26 16:18:50"
+            "time": "2014-04-20 07:24:09"
         },
         {
             "name": "psr/log",
@@ -570,63 +570,58 @@
         },
         {
             "name": "silex/silex",
-            "version": "dev-master",
+            "version": "v1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/silexphp/Silex.git",
-                "reference": "e12be31a5aa9095500762d4035f9a1f112fa5761"
+                "reference": "57c98ea0cb47664096094912920951fde1f4631a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silexphp/Silex/zipball/e12be31a5aa9095500762d4035f9a1f112fa5761",
-                "reference": "e12be31a5aa9095500762d4035f9a1f112fa5761",
+                "url": "https://api.github.com/repos/silexphp/Silex/zipball/57c98ea0cb47664096094912920951fde1f4631a",
+                "reference": "57c98ea0cb47664096094912920951fde1f4631a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
-                "pimple/pimple": "~3.0",
-                "symfony/event-dispatcher": "~2.4",
-                "symfony/http-foundation": "~2.4",
-                "symfony/http-kernel": "~2.4",
-                "symfony/routing": "~2.4"
-            },
-            "replace": {
-                "silex/api": "self.version",
-                "silex/providers": "self.version"
+                "pimple/pimple": "~1.0",
+                "symfony/event-dispatcher": "~2.3,<3.0",
+                "symfony/http-foundation": "~2.3,<3.0",
+                "symfony/http-kernel": "~2.3,<3.0",
+                "symfony/routing": "~2.3,<3.0"
             },
             "require-dev": {
                 "doctrine/dbal": "~2.2",
                 "monolog/monolog": "~1.4,>=1.4.1",
                 "swiftmailer/swiftmailer": "5.*",
-                "symfony/browser-kit": "~2.4",
-                "symfony/config": "~2.4",
-                "symfony/css-selector": "~2.4",
-                "symfony/debug": "~2.4",
-                "symfony/doctrine-bridge": "~2.4",
-                "symfony/dom-crawler": "~2.4",
-                "symfony/finder": "~2.4",
-                "symfony/form": "~2.4",
-                "symfony/locale": "~2.4",
-                "symfony/monolog-bridge": "~2.4",
-                "symfony/options-resolver": "~2.4",
-                "symfony/process": "~2.4",
-                "symfony/security": "~2.4",
-                "symfony/serializer": "~2.4",
-                "symfony/translation": "~2.4",
-                "symfony/twig-bridge": "~2.4",
-                "symfony/validator": "~2.4",
+                "symfony/browser-kit": "~2.3,<3.0",
+                "symfony/config": "~2.3,<3.0",
+                "symfony/css-selector": "~2.3,<3.0",
+                "symfony/debug": "~2.3,<3.0",
+                "symfony/dom-crawler": "~2.3,<3.0",
+                "symfony/finder": "~2.3,<3.0",
+                "symfony/form": "~2.3,<3.0",
+                "symfony/locale": "~2.3,<3.0",
+                "symfony/monolog-bridge": "~2.3,<3.0",
+                "symfony/options-resolver": "~2.3,<3.0",
+                "symfony/process": "~2.3,<3.0",
+                "symfony/security": "~2.3,<3.0",
+                "symfony/serializer": "~2.3,<3.0",
+                "symfony/translation": "~2.3,<3.0",
+                "symfony/twig-bridge": "~2.3,<3.0",
+                "symfony/validator": "~2.3,<3.0",
                 "twig/twig": ">=1.8.0,<2.0-dev"
             },
             "suggest": {
-                "symfony/browser-kit": "~2.4",
-                "symfony/css-selector": "~2.4",
-                "symfony/dom-crawler": "~2.4",
-                "symfony/form": "~2.4"
+                "symfony/browser-kit": "~2.3",
+                "symfony/css-selector": "~2.3",
+                "symfony/dom-crawler": "~2.3",
+                "symfony/form": "~2.3"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0.x-dev"
+                    "dev-master": "1.2.x-dev"
                 }
             },
             "autoload": {
@@ -653,7 +648,7 @@
             "keywords": [
                 "microframework"
             ],
-            "time": "2015-01-18 13:18:59"
+            "time": "2015-01-20 16:45:58"
         },
         {
             "name": "symfony/config",

@@ -22,8 +22,18 @@ module.exports = [
       loadList $scope
     loadList $scope
 
-    $scope.getSrc = (index)->
-      if $scope.srcMode
+    $scope.getSrc = (apiEntry,index)->
+      if image = $scope.lists[index]
+        if $scope.srcMode == "hashed"
+          return image.hashedUrl
+        else if $scope.srcMode == "redirect"
+          return apiEntry+image.redirectUrl
+        else if $scope.srcMode == "origin"
+          return apiEntry+image.originUrl
+        else
+          console.error "invalid srcMode",$scope.srcMode;
+      else
+        console.error "image index #{index} is out of range"
 
 
 

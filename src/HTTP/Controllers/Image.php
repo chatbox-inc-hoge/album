@@ -12,7 +12,9 @@ use Chatbox\Album\HTTP\API;
 use Chatbox\Input;
 use Chatbox\Silane\Response\JsonStatusResponse;
 
-class Image implements \Silex\Api\ControllerProviderInterface{
+use Silex\ControllerProviderInterface;
+
+class Image implements ControllerProviderInterface{
 
     protected $input;
     /**

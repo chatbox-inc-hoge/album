@@ -11,8 +11,10 @@ namespace Chatbox\Album\HTTP\Controllers;
 use Chatbox\Album\HTTP\API;
 use Chatbox\Input;
 use Chatbox\Silane\Response\JsonStatusResponse;
+use Silex\ControllerProviderInterface;
 
-class Photo implements \Silex\Api\ControllerProviderInterface{
+
+class Photo implements ControllerProviderInterface{
 
     protected $input;
     /**

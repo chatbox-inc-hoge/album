@@ -14,17 +14,18 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
+use Chatbox\Album\Album;
+
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 
 
 abstract class Base extends Command{
 
-	/**
-	 * getter 付きアクセスのため、private
-	 * @var \Migrate\Config
-	 */
-	private $config = null;
+    /**
+     * @var Album
+     */
+    protected $album;
 	/**
 	 * @var Capsule
 	 */
@@ -32,6 +33,11 @@ abstract class Base extends Command{
 
 	public function configure()
 	{
+        \Chatbox\PHPUtil::bootEloquent("mysql://root@127.0.0.1/misaki");
+
+        $config = Album::config();
+        $config->load(getcwd()."/appconfig.php");
+        $this->album = new Album($config);
 //        $this->addOption("config","c",InputOption::VALUE_OPTIONAL,"configuration file","database.php");
 //        $this->addOption("host",null,InputOption::VALUE_OPTIONAL,"connection setting",null);
 	}

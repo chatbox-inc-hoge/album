@@ -57,6 +57,10 @@ class Image implements \JsonSerializable{
      */
     public function create($category,$comment,Upload $upload){
         $hashedName = sha1(mt_rand(0,999999).time());
+        return $this->store($category,$hashedName,$comment,"",$upload);
+    }
+
+    public function store($category,$hashedName,$comment,$meta,Upload $upload){
         $image = Eloquent::create([
             "category"=>$category,
             "origin_name"=>$upload->getOriginName(),
@@ -64,16 +68,17 @@ class Image implements \JsonSerializable{
             "size"=>$upload->getSize(),
             "mime"=>$upload->getMime(),
             "comment"=>$comment,
-            "meta"=>"hoge",
+            "meta"=>$meta,
         ]);
-        $data = new EloquentData([
+        $dataEloq = new EloquentData([
             "data" => $upload->loadData()
         ]);
-        $image->data()->save($data);
+        $image->data()->save($dataEloq);
 
         $image = $this->newInstance($image);
         $upload->move($image->getUploadPath());
         return $image;
+
     }
 
     /**
@@ -134,7 +139,9 @@ class Image implements \JsonSerializable{
     {
         $data = $this->eloquent->toArray();
         $data["url"] = $this->getUrl();
-        $data["apiUrl"] = "/i/src/{$data["category"]}/{$data["origin_name"]}";
+        $data["hashedUrl"] = $this->getUrl();
+        $data["originUrl"] = "/i/src/{$data["category"]}/{$data["origin_name"]}";
+        $data["redirectUrl"] = "/i/src/{$data["category"]}/{$data["origin_name"]}";
         return $data;
     }
 
