@@ -23,6 +23,17 @@ class Image extends Model{
         return $this->hasOne('Chatbox\Album\Services\Eloquent\Data',"id","id");
     }
 
+	public function getCategories(){
+
+		$res = $this->getConnection()->table($this->table)->groupBy("category")->get();
+		$pool = [];
+		foreach($res as $val){
+			$pool[] = $val["category"];
+		}
+		return $pool;
+
+	}
+
 //	public function toArray(){
 //		$data = parent::toArray();
 //		$album = new Album();

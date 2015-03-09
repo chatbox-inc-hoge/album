@@ -23,20 +23,6 @@ class API extends Silane{
         return $config;
     }
 
-//    public function __construct(array $values = array())
-//    {
-//        parent::__construct($values);
-//
-//        $this->register(new RestErrorHandlerProvider());
-//        $this->mount("/upload", new Controllers\Upload());
-//        $this->mount("/photo", new Controllers\Photo());
-//        $this->mount("/image", new Controllers\Image());
-//        $this->mount("/i", new Controllers\Redirect());
-//    }
-
-
-
-
     public function configure(){
         $this["album"] = new Album($this->getConfig());
     }

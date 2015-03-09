@@ -15,7 +15,7 @@ use Chatbox\PHPUtil;
 use Chatbox\Input;
 use Silex\ControllerProviderInterface;
 
-class Upload implements ControllerProviderInterface{
+class Upload extends Base{
 
     /**
      * @var Input
@@ -32,7 +32,6 @@ class Upload implements ControllerProviderInterface{
     {
         $controllers = $app["controllers_factory"];
 
-        $this->input = Input::load("json");
         $controllers->post("/data",[$this,"actionPost"]);
 
         return $controllers;
@@ -42,7 +41,7 @@ class Upload implements ControllerProviderInterface{
     public function actionPost(API $api){
         try{
             $album = $api->getAlbum();
-            $originName = $this->input->get("file");
+            $originName = $this->getInput()->get("file");
             $fileData = PHPUtil::dataUriToBinary($this->input->get("data"));
 
             $upload = $album->upload()->dumpTmpFile($originName,$fileData);

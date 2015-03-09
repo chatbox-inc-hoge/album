@@ -14,9 +14,8 @@ use Chatbox\Silane\Response\JsonStatusResponse;
 use Silex\ControllerProviderInterface;
 
 
-class Photo implements ControllerProviderInterface{
+class Book implements ControllerProviderInterface{
 
-    protected $input;
     /**
      * Returns routes to connect to the given application.
      *
@@ -27,14 +26,32 @@ class Photo implements ControllerProviderInterface{
     public function connect(\Silex\Application $app)
     {
         $controllers = $app["controllers_factory"];
-
-        $this->input = Input::load("json");
-        $controllers->get("/list/{category}/",[$this,"actionList"]);
+//        $controllers->get("/list/{category}/",[$this,"actionInfo"]);//deprecated
+        $controllers->get("/list/",[$this,"actionList"]);
+        $controllers->get("/info/{categoryName}",[$this,"actionInfo"]);
         return $controllers;
     }
 
-    public function actionList(API $api,$category){
-        $imageList = $api->getAlbum()->image()->getByCategory($category);
+	/**
+	 * 利用可能なカテゴリの一覧を取得
+	 * @param API $api
+	 * @param $category
+	 * @return static
+	 */
+	public function actionList(API $api){
+		$list = $api->getAlbum()->image()->getCategories();
+		return JsonStatusResponse::ok([
+			"list" => $list
+		]);
+    }
+	/**
+	 * 指定したカテゴリの画像一覧を取得
+	 * @param API $api
+	 * @param $category
+	 * @return static
+	 */
+	public function actionInfo(API $api,$categoryName){
+        $imageList = $api->getAlbum()->image()->getByCategory($categoryName);
         return JsonStatusResponse::ok([
             "list"=>$imageList,
             "query"=>\Chatbox\PHPUtil::getEloquent()->getQueryLog()

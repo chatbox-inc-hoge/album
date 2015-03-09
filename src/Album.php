@@ -13,6 +13,7 @@ use Chatbox\Config\Config;
 
 use Chatbox\Album\Providers\UploadProvider;
 use Chatbox\Album\Providers\ImageProvider;
+use Chatbox\Album\Providers\ZipProvider;
 
 use Chatbox\Album\Services\Upload;
 
@@ -36,6 +37,7 @@ class Album extends Box{
         parent::configure();
         $this->register("image",["config"],new ImageProvider());
         $this->register("upload",["config"],new UploadProvider());
+        $this->register("zip",["image","upload"],new ZipProvider());
         $this->register("config",[],function(){
             return $this->config;
         });
@@ -51,5 +53,11 @@ class Album extends Box{
      */
     public function image(){
         return $this->get("image");
+    }
+    /**
+     * @return Services\Zip
+     */
+    public function zip(){
+        return $this->get("zip");
     }
 }

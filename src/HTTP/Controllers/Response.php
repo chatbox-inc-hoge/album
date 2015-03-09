@@ -15,9 +15,8 @@ use Chatbox\HTTP;
 
 use Silex\ControllerProviderInterface;
 
-class Redirect implements ControllerProviderInterface{
+class Response extends Base{
 
-    protected $input;
     /**
      * Returns routes to connect to the given application.
      *
@@ -29,19 +28,30 @@ class Redirect implements ControllerProviderInterface{
     {
         $controllers = $app["controllers_factory"];
 
-        $this->input = Input::load("json");
         $controllers->get("/redirect/{category}/{originName}",[$this,"actionRedirect"]);
         $controllers->get("/src/{category}/{originName}",[$this,"actionRedirect"]);
-        $controllers->get("/info/{category}/{originName}",[$this,"actionInfo"]);
+        $controllers->get("/gd/{category}/{originName}",[$this,"actionGd"]);
         return $controllers;
     }
 
+	/**
+	 * 画像の取得ユーティリティ
+	 * @param API $api
+	 * @param $category
+	 * @param $id
+	 * @return \Chatbox\Album\Services\Image
+	 */
+	protected function getImage(API $api,$category,$id){
+		return $api->getAlbum()->image()->fetch([
+			"category" => $category,
+			"origin_name" => $id
+		]);
+	}
+
+
     public function actionRedirect(API $api,$category,$originName){
         try{
-            $image = $api->getAlbum()->image()->fetch([
-                "category" => $category,
-                "origin_name" => $originName
-            ]);
+            $image = $this->getImage($api,$category,$originName);
             if($image){
                 HTTP::redirect($image->getUrl());
                 exit;
@@ -54,10 +64,25 @@ class Redirect implements ControllerProviderInterface{
         }catch (\Exception $e){
             return JsonStatusResponse::error($e);
         }
-        return JsonStatusResponse::ok([
-//            "list"=>$imageList,
-            "query"=>\Chatbox\PHPUtil::getEloquent()->getQueryLog()
-        ]);
     }
+
+	public function actionGd(API $api,$category,$originName){
+		try{
+			$image = $this->getImage($api,$category,$originName);
+			if($image){
+				$im = imagecreatefromstring($image->getEloquent()->data->data);
+				header('Content-Type: image/png');
+				imagepng($im);
+				imagedestroy($im);
+			}else{
+				return JsonStatusResponse::bad([
+					"category" => $category,
+					"origin_name" => $originName
+				]);
+			}
+		}catch (\Exception $e){
+			return JsonStatusResponse::error($e);
+		}
+	}
 
 } 

@@ -11,6 +11,7 @@ namespace Chatbox\Album\Services;
 use Chatbox\Album\Services\Eloquent\Image as Eloquent;
 use Chatbox\Album\Services\Eloquent\Data as EloquentData;
 use Chatbox\Config\Config;
+use Chatbox\PHPUtil;
 
 class Image implements \JsonSerializable{
 
@@ -82,7 +83,7 @@ class Image implements \JsonSerializable{
     }
 
     /**
-     * @return Eloqent
+     * @return Eloquent
      */
     public function getEloquent(){
         if($this->eloquent){
@@ -128,6 +129,15 @@ class Image implements \JsonSerializable{
         $this->eloquent->delete();
     }
 
+	public function getCategories(){
+		$list = Eloquent::groupBy("category")->get();
+		$rtn = [];
+		foreach($list as $image){
+			$rtn[$image["category"]] = $this->newInstance($image);
+		}
+		return $rtn;
+	}
+
     /**
      * (PHP 5 &gt;= 5.4.0)<br/>
      * Specify data which should be serialized to JSON
@@ -140,7 +150,7 @@ class Image implements \JsonSerializable{
         $data = $this->eloquent->toArray();
         $data["url"] = $this->getUrl();
         $data["hashedUrl"] = $this->getUrl();
-        $data["originUrl"] = "/i/src/{$data["category"]}/{$data["origin_name"]}";
+        $data["originUrl"] = "/i/gd/{$data["category"]}/{$data["origin_name"]}";
         $data["redirectUrl"] = "/i/src/{$data["category"]}/{$data["origin_name"]}";
         return $data;
     }

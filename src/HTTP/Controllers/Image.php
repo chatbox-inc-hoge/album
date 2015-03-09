@@ -14,9 +14,8 @@ use Chatbox\Silane\Response\JsonStatusResponse;
 
 use Silex\ControllerProviderInterface;
 
-class Image implements ControllerProviderInterface{
+class Image extends Base{
 
-    protected $input;
     /**
      * Returns routes to connect to the given application.
      *
@@ -28,17 +27,34 @@ class Image implements ControllerProviderInterface{
     {
         $controllers = $app["controllers_factory"];
 
-        $this->input = Input::load("json");
         $controllers->post("/delete/{category}/{id}",[$this,"actionDelete"]);
         return $controllers;
     }
 
-    public function actionDelete(API $api,$category,$id){
+	/**
+	 * 画像の取得ユーティリティ
+	 * @param API $api
+	 * @param $category
+	 * @param $id
+	 * @return \Chatbox\Album\Services\Image
+	 */
+	protected function getImage(API $api,$category,$id){
+		return $api->getAlbum()->image()->fetch([
+			"category" => $category,
+			"hashed_name" => $id
+		]);
+	}
+
+	/**
+	 * 指定した画像を削除
+	 * @param API $api
+	 * @param $category
+	 * @param $id
+	 * @return static
+	 */
+	public function actionDelete(API $api,$category,$id){
         try{
-            $image = $api->getAlbum()->image()->fetch([
-                "category" => $category,
-                "hashed_name" => $id
-            ]);
+            $image = $this->getImage($api,$category,$id);
             if($image){
                 $image->delete();
             }else{
@@ -47,10 +63,7 @@ class Image implements ControllerProviderInterface{
         }catch (\Exception $e){
             return JsonStatusResponse::error($e);
         }
-        return JsonStatusResponse::ok([
-//            "list"=>$imageList,
-            "query"=>\Chatbox\PHPUtil::getEloquent()->getQueryLog()
-        ]);
+        return JsonStatusResponse::ok([]);
     }
 
 } 
