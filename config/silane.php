@@ -8,7 +8,6 @@
 
 return [
     "silane" => [
-        "hoge"=>"piyo",
         "silex"=>[
             "debug"=>true
         ],

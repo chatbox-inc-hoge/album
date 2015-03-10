@@ -10,6 +10,10 @@ namespace Chatbox\Album\Services;
 
 use Chatbox\Filesystem;
 
+/**
+ * 一時ファイルをベースに処理するほげほげ
+ * @package Chatbox\Album\Services
+ */
 class Upload {
 
     protected $tmpPath;
@@ -56,10 +60,12 @@ class Upload {
         return new static($path);
     }
 
-    public function load($key){
-
-    }
-
+    /**
+     * 既存データから生成
+     * @param $originName
+     * @param $sourceData
+     * @return static
+     */
     public function dumpTmpFile($originName,$sourceData){
         $fp = tmpfile();
         fwrite($fp,$sourceData);

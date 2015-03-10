@@ -8,7 +8,6 @@
 return [
     "image"=>[
         "uploadDir" => __DIR__."/sample/image/",
-        "exportDir" => __DIR__."/image/",
         "httpPath" => "/image/"
     ],
 ];

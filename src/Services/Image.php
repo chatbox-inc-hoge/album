@@ -51,6 +51,8 @@ class Image implements \JsonSerializable{
     }
 
     /**
+     * 新規生成を行う。
+     * ハッシュの自動生成付き
      * @param $category
      * @param $comment
      * @param Upload $upload
@@ -61,6 +63,15 @@ class Image implements \JsonSerializable{
         return $this->store($category,$hashedName,$comment,"",$upload);
     }
 
+    /**
+     * 単純なinsert処理
+     * @param $category
+     * @param $hashedName
+     * @param $comment
+     * @param $meta
+     * @param Upload $upload
+     * @return Image|static
+     */
     public function store($category,$hashedName,$comment,$meta,Upload $upload){
         $image = Eloquent::create([
             "category"=>$category,
