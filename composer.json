@@ -9,7 +9,6 @@
     "require": {
         "php": ">=5.4",
         "illuminate/database": "~4.2.12",
-        "chatbox/tmp-data": "dev-master",
         "chatbox/migrate": "dev-master",
         "symfony/finder": "@stable",
         "symfony/filesystem": "@stable",
