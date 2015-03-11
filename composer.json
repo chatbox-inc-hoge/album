@@ -20,6 +20,7 @@
             "Chatbox\\Album\\":"src/"
         }
     },
+    "bin": ["bin/album"],
     "minimum-stability": "dev",
     "require-dev": {
         "phpunit/phpunit": "~4.4"

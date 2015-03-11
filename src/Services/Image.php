@@ -46,7 +46,7 @@ class Image implements \JsonSerializable{
      * @param $eloquent
      * @return Image
      */
-    protected function newInstance($eloquent){
+    public function newInstance($eloquent){
         return new static($this->config,$eloquent);
     }
 
