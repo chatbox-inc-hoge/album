@@ -38,7 +38,14 @@ class Upload extends Base{
     }
 
 
-    public function actionPost(API $api){
+	/**
+	 * file
+	 * data
+	 *
+	 * @param API $api
+	 * @return static
+	 */
+	public function actionPost(API $api){
         try{
             $album = $api->getAlbum();
             $originName = $this->getInput()->get("file");

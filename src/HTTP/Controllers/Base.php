@@ -13,11 +13,15 @@ use Chatbox\Input;
 
 abstract class Base implements ControllerProviderInterface{
 
+	protected $input;
 	/**
 	 * @return Input
 	 */
 	public function getInput(){
-		return  Input::load("json");
+		if(is_null($this->input)){
+			$this->input = Input::load("json");
+		}
+		return $this->input;
 	}
 
 } 

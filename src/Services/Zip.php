@@ -47,13 +47,10 @@ class Zip {
 		$fp = tmpfile();
 		$path = stream_get_meta_data($fp)["uri"];
 		file_put_contents($path,$data);
+		$this->zip = new \ZipArchive();
+		$this->fp = $fp;//この変数の寿命が一時ファイルの寿命
 
-		$zip = new \ZipArchive();
-		if($zip->open($path)){
-			return $this->newInstance($zip);
-		}else{
-			throw new \Exception("hoge");
-		}
+		return ($this->zip->open($path) === true);
 	}
 
 	/**
@@ -81,7 +78,7 @@ class Zip {
 	public function extract($category){
 		$zip = $this->zip();
 	    for($i=0;$i<$this->count();$i++){
-//		    $zip->open($path);
+//		    $zip->open($this->path);
 		    $fileData = $zip->statIndex($i);
 		    $entryName = $fileData["name"];
 		    if( $entryName === "composit.json" ){
@@ -91,9 +88,9 @@ class Zip {
 				    $data = stream_get_contents($zipfp);
 				    $upload = $this->upload->dumpTmpFile($fileData["name"],$data);
 				    $newImage = $this->image->create($category,"",$upload);
-				    fclose($zipfp);
+//				    fclose($zipfp);
 			    }else{
-				    throw new \Exception("hoge {$entryName}");
+				    throw new \Exception("fail to get entry from archive $entryName(count $i)");
 			    }
 		    }
 	    }

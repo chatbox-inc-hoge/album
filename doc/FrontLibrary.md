@@ -1,15 +1,16 @@
 # フロントライブラリ
 
+
 ````
 album = new Album({
     "api": "api.php"
 });
 
 
-album.upload.zip(category,file)
-album.upload.file(category,file)
+album.uploadZip(category,file,cb)
+album.uploadFile(category,file,cb)
 
-album.book category
-album.bookList
+xhr = album.bookInfo categoryName
+xhr = album.bookList
 
 ````
