@@ -48,24 +48,24 @@ class Album extends Box{
      * @return Upload
      */
     public function upload(){
-        return $this->get("upload");
+        return $this->getService("upload");
     }
     /**
      * @return Services\Image
      */
     public function image(){
-        return $this->get("image");
+        return $this->getService("image");
     }
     /**
      * @return Services\Book
      */
     public function book(){
-        return $this->get("book");
+        return $this->getService("book");
     }
     /**
      * @return Services\Zip
      */
     public function zip(){
-        return $this->get("zip");
+        return $this->getService("zip");
     }
 }
