@@ -8,11 +8,7 @@
     ],
     "require": {
         "php": ">=5.4",
-        "illuminate/database": "~5",
         "chatbox/migrate": "dev-master",
-        "symfony/finder": "@stable",
-        "symfony/filesystem": "@stable",
-        "chatbox/silane": "dev-master",
         "chatbox/box": "dev-master"
     },
     "autoload":{
