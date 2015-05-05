@@ -1,71 +1,50 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mkkn
- * Date: 2015/02/02
- * Time: 20:16
- */
-
 namespace Chatbox\Album;
 
-use Chatbox\Box\Box;
-use Chatbox\Config\Config;
+use Chatbox\Album\Album\ManagerInterface;
+use Chatbox\Album\Upload\File;
+use Chatbox\Album\Storage\StorageInterface;
+use Chatbox\Album\Upload\FormFileLoader;
 
-use Chatbox\Album\Providers\UploadProvider;
-use Chatbox\Album\Providers\ImageProvider;
-use Chatbox\Album\Providers\ZipProvider;
-use Chatbox\Album\Providers\BookProvider;
+/**
+ * UploadとAssetのサービスを生成する
+ * インターフェイス的役割
+ * 依存関係はココに全てまとめきる。
+ */
+class Album {
 
-use Chatbox\Album\Services\Upload;
+    /** @var ManagerInterface */
+    protected $albumManager;
 
-class Album extends Box{
+    /** @var StorageInterface[] */
+    protected $storageHandlers = [];
 
-    static public function config(){
-//        $config = new Config();
-        $config = Config::forge();
-        $config->load(__DIR__."/../config/album.php");
-        return $config;
+    function __construct(ManagerInterface $albumManager,array $storageHandlers,File $file=null)
+    {
+        $this->albumManager = $albumManager;
+        $this->storageHandlers = $storageHandlers;
     }
 
-    private $config;
-
-    public function __construct(Config $config){
-        $this->config = $config;
-        $this->configure();
+    public function upload($storageHandlerName){
+        $storageHandler = $this->storageHandlers[$storageHandlerName];
+        return new Upload($this->albumManager,$storageHandler);
     }
 
-    public function configure(){
-        parent::configure();
-        $this->register("image",["config"],new ImageProvider());
-        $this->register("book",["config","image"],new BookProvider());
-        $this->register("upload",["config"],new UploadProvider());
-        $this->register("zip",["image","upload"],new ZipProvider());
-        $this->register("config",[],function(){
-            return $this->config;
-        });
+    public function getList($cond){
+        $arr = $this->albumManager->findBy($cond);
+
+
+
+
     }
-    /**
-     * @return Upload
-     */
-    public function upload(){
-        return $this->getService("upload");
+
+    public function find($category,$name){
+        $assetData = $this->albumManager->find($category,$name);
+
+        $storageHandler = $this->
+
+        $asset = new Asset($assetData,$storage);
+
     }
-    /**
-     * @return Services\Image
-     */
-    public function image(){
-        return $this->getService("image");
-    }
-    /**
-     * @return Services\Book
-     */
-    public function book(){
-        return $this->getService("book");
-    }
-    /**
-     * @return Services\Zip
-     */
-    public function zip(){
-        return $this->getService("zip");
-    }
+
 }

@@ -1,74 +1,57 @@
 <?php
+namespace Chatbox\Album;
+
+use Chatbox\Album\Album\ManagerInterface;
+use Chatbox\Album\Upload\File;
+use Chatbox\Album\Storage\StorageInterface;
+use Chatbox\Album\Upload\FormFileLoader;
+
 /**
  * Created by PhpStorm.
  * User: mkkn
- * Date: 2014/12/03
- * Time: 0:12
+ * Date: 2015/05/05
+ * Time: 19:56
  */
 
-namespace Chatbox\Album;
-
-/**
- * 参考
- * http://qiita.com/mpyw/items/939964377766a54d4682
- * Class Upload
- * @package Album
- *
- */
 class Upload {
 
-    static public function forge($key){
-        return new static($key);
-    }
+    /** @var ManagerInterface */
+    protected $albumManager;
 
-    protected $key;
-    protected $maxFileSize;
+    /** @var StorageInterface */
+    protected $storageHandler;
 
-    function __construct($key,$maxFileSize=null)
+    /** @var File */
+    protected $file;
+
+    function __construct(ManagerInterface $albumManager,StorageInterface $storageHandlers)
     {
-        $this->key = $key;
-        $this->maxFileSize = $maxFileSize;
+        $this->albumManager = $albumManager;
+        $this->storageHandlers = $storageHandlers;
     }
 
-    public function getOriginName(){
-        return $_FILES[$this->key]['name'];
-    }
-    public function getSize(){
-        return $_FILES[$this->key]['size'];
-    }
-    public function getError(){
-        if(!isset($_FILES[$this->key]['error']) || !is_int($_FILES[$this->key]['error'])){
-            throw new RuntimeException('パラメータが不正です');
-        }
-        return (int)$_FILES[$this->key]['error'];
-    }
-    public function tmpFilePath(){
-        return $_FILES[$this->key]['tmp_name'];
-    }
-    public function getFileType(){
-        // $_FILES['upfile']['mime']の値はブラウザ側で偽装可能なので
-        // MIMEタイプに対応する拡張子を自前で取得する
-        $finfo = new finfo(FILEINFO_MIME_TYPE);
-        return $finfo->file($this->tmpFilePath());
+    public function form($key){
+        $loader = new FormFileLoader();
+        $this->file = $loader->load($key);
+        return $this;
     }
 
-    protected function validate(){
-        switch ($this->getError()) {
-            case UPLOAD_ERR_OK: // OK
-                break;
-            case UPLOAD_ERR_NO_FILE:   // ファイル未選択
-                throw new RuntimeException('ファイルが選択されていません');
-            case UPLOAD_ERR_INI_SIZE:  // php.ini定義の最大サイズ超過
-            case UPLOAD_ERR_FORM_SIZE: // フォーム定義の最大サイズ超過
-                throw new RuntimeException('ファイルサイズが大きすぎます');
-            default:
-                throw new RuntimeException('その他のエラーが発生しました');
-        }
-
-        if ($this->maxFileSize && $this->getSize() > $this->maxFileSize) {
-            throw new RuntimeException('ファイルサイズが大きすぎます');
-        }
+    public function input($key){
+        $loader = new FormFileLoader();
+        $this->file = $loader->load($key);
+        return $this;
     }
 
+    /** @return File */
+    public function file(){
+        return $this->file;
+    }
 
-} 
+    public function save($storedName = null){
+        is_null($storedName) && ($storedName = sha1(time().mt_rand()));
+        $this->file->setStoredName($storedName);
+        $this->albumManager->save($this->file);
+        $this->storageHandler->save($this->file);
+    }
+
+}

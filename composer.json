@@ -8,8 +8,7 @@
     ],
     "require": {
         "php": ">=5.4",
-        "chatbox/migrate": "dev-master",
-        "chatbox/box": "dev-master"
+        "chatbox/migrate": "dev-master"
     },
     "autoload":{
         "psr-4":{
